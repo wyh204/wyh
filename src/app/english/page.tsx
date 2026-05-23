@@ -38,30 +38,77 @@ export default function EnglishPage() {
     setHooks(null);
     setOutline(null);
     setGuidance(null);
+
     try {
       const res = await fetch("/api/english", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode, input }),
       });
-      const json = await res.json();
-      if (!res.ok) { setError({ message: json.error, code: json.code }); setLoading(false); return; }
 
-      if (mode === "essay") {
-        if (json.data.outline) setOutline(json.data.outline);
-        if (json.data.guidance) setGuidance(json.data.guidance);
-        if (json.data.hooks?.length) setHooks(json.data.hooks);
-      } else if (json.data.raw) {
-        setResult(json.data.raw);
+      if (!res.ok) {
+        try {
+          const json = await res.json();
+          setError({ message: json.error, code: json.code });
+        } catch { setError({ message: "网络错误" }); }
+        setLoading(false);
+        return;
       }
 
-      const item = save("english", input, json.data.raw || JSON.stringify(json.data), mode);
+      // SSE streaming reader
+      const reader = res.body?.getReader();
+      if (!reader) { setLoading(false); return; }
+
+      const decoder = new TextDecoder();
+      let fullText = "";
+      setResult("");
+      setStreaming(true);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n");
+
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const data = line.slice(6);
+          try {
+            const parsed = JSON.parse(data);
+            if (parsed.error) {
+              setError({ message: parsed.error });
+              setStreaming(false);
+              break;
+            }
+            if (parsed.done) {
+              setStreaming(false);
+              fullText = parsed.full || fullText;
+            } else if (parsed.delta) {
+              fullText += parsed.delta;
+              setResult(fullText);
+            }
+          } catch { /* skip unparseable */ }
+        }
+      }
+      setStreaming(false);
+
+      // For essay mode, parse fullText for outline/guidance/hooks
+      if (mode === "essay") {
+        try {
+          const parsed = JSON.parse(fullText);
+          if (parsed.outline) setOutline(parsed.outline);
+          if (parsed.guidance) setGuidance(parsed.guidance);
+          if (parsed.hooks?.length) setHooks(parsed.hooks);
+        } catch { /* not JSON, keep as raw result */ }
+      }
+
+      const item = save("english", input, fullText, mode);
       setCurrentItem(item);
     } catch {
       setError({ message: "网络错误" });
     } finally {
       setLoading(false);
-      setStreaming(false);
     }
   }, [mode, save]);
 

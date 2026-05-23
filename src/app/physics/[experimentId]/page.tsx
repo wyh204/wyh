@@ -30,17 +30,62 @@ export default function PhysicsExperimentPage() {
     setLoading(true);
     setError(null);
     setResult(null);
+
     try {
       const res = await fetch("/api/physics", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ experimentName: experiment.name, scientist: experiment.scientist }),
       });
-      const json = await res.json();
-      if (!res.ok) { setError({ message: json.error, code: json.code }); setLoading(false); return; }
-      setResult(json.data.raw);
+
+      if (!res.ok) {
+        try {
+          const json = await res.json();
+          setError({ message: json.error, code: json.code });
+        } catch { setError({ message: "网络错误" }); }
+        setLoading(false);
+        return;
+      }
+
+      // SSE streaming reader
+      const reader = res.body?.getReader();
+      if (!reader) { setLoading(false); return; }
+
+      const decoder = new TextDecoder();
+      let fullText = "";
+      setResult("");
+      setStreaming(true);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n");
+
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const data = line.slice(6);
+          try {
+            const parsed = JSON.parse(data);
+            if (parsed.error) {
+              setError({ message: parsed.error });
+              setStreaming(false);
+              break;
+            }
+            if (parsed.done) {
+              setStreaming(false);
+              fullText = parsed.full || fullText;
+            } else if (parsed.delta) {
+              fullText += parsed.delta;
+              setResult(fullText);
+            }
+          } catch { /* skip unparseable */ }
+        }
+      }
       setStreaming(false);
-      const item = save("physics", experiment.name, json.data.raw || "");
+
+      const item = save("physics", experiment.name, fullText);
       setCurrentItem(item);
     } catch {
       setError({ message: "网络错误" });

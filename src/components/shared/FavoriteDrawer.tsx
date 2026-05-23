@@ -1,17 +1,8 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Heart, Trash2 } from "lucide-react";
-import type { FavoriteItem, Subject } from "@/types";
-import { cn, formatDate, truncate } from "@/lib/utils";
-
-const subjectLabels: Record<Subject, string> = {
-  yuwen: "语文", math: "数学", english: "英语", physics: "物理", chemistry: "化学",
-};
-
-const subjectColors: Record<Subject, string> = {
-  yuwen: "text-yuwen", math: "text-math", english: "text-english",
-  physics: "text-physics", chemistry: "text-chemistry",
-};
+import { X, Trash2 } from "lucide-react";
+import type { FavoriteItem } from "@/types";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   open: boolean;
@@ -29,47 +20,40 @@ export default function FavoriteDrawer({ open, onClose, favorites, onRemove }: P
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 z-[60]"
             onClick={onClose}
-            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
           />
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-md glass-card rounded-none border-0 border-l"
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed top-0 right-0 bottom-0 w-80 drawer-glass z-[70] flex flex-col"
           >
-            <div className="flex items-center justify-between p-4 border-b border-white/5">
-              <div className="flex items-center gap-2">
-                <Heart className="w-5 h-5 text-red-400" />
-                <h3 className="text-lg font-bold">我的收藏</h3>
-              </div>
-              <button onClick={onClose} className="text-text-secondary hover:text-text-primary">
-                <X className="w-5 h-5" />
+            <div className="flex items-center justify-between p-6 border-b border-white/[0.06]">
+              <h3 className="text-[12px] tracking-[0.15em] font-bold text-white/60 uppercase">我的收藏</h3>
+              <button type="button" onClick={onClose} className="text-white/30 hover:text-white/60 transition-colors">
+                <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="overflow-y-auto h-[calc(100%-60px)] p-4 space-y-3">
-              {favorites.length === 0 && (
-                <p className="text-text-secondary text-sm text-center py-12">暂无收藏</p>
-              )}
-              {favorites.map((item) => (
-                <div key={item.id} className="glass-card p-3 hover:border-white/10 transition-all">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className={cn("text-xs font-medium", subjectColors[item.subject])}>
-                      {subjectLabels[item.subject]}
-                      {item.mode && ` · ${item.mode}`}
-                    </span>
-                    <span className="text-xs text-text-secondary">{formatDate(item.timestamp)}</span>
-                  </div>
-                  <p className="text-sm text-text-primary">{truncate(item.input)}</p>
-                  <button
-                    onClick={() => onRemove(item.id)}
-                    className="mt-2 text-xs text-red-400/70 hover:text-red-400 px-2 py-1 rounded-lg hover:bg-white/5 transition-all inline-flex items-center gap-1"
-                  >
-                    <Trash2 className="w-3 h-3" /> 取消收藏
-                  </button>
+            <div className="flex-1 overflow-y-auto p-4">
+              {favorites.length === 0 ? (
+                <p className="text-[12px] text-white/15 text-center mt-20">暂无收藏</p>
+              ) : (
+                <div className="space-y-2">
+                  {favorites.map((item) => (
+                    <div key={item.id} className="content-card p-4 flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="text-[10px] tracking-[0.1em] text-white/20 mb-1.5">{formatDate(item.timestamp)}</div>
+                        <p className="text-[12px] text-white/50 truncate">{item.input}</p>
+                      </div>
+                      <button type="button" onClick={() => onRemove(item.id)} className="text-white/20 hover:text-red-400 transition-colors flex-shrink-0">
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
           </motion.div>
         </>
