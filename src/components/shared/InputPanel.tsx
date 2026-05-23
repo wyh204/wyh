@@ -9,6 +9,7 @@ interface Props {
   loading?: boolean;
   disabled?: boolean;
   maxLength?: number;
+  accentColor?: string;
 }
 
 export default function InputPanel({
@@ -17,6 +18,7 @@ export default function InputPanel({
   loading = false,
   disabled = false,
   maxLength = 500,
+  accentColor = "#a78bfa",
 }: Props) {
   const [input, setInput] = useState("");
 
@@ -33,8 +35,8 @@ export default function InputPanel({
   }
 
   return (
-    <div className="flex gap-3 items-end">
-      <div className="flex-1 relative">
+    <div className="flex gap-3 items-stretch">
+      <div className="flex-1">
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -42,29 +44,27 @@ export default function InputPanel({
           placeholder={placeholder}
           disabled={disabled}
           maxLength={maxLength}
-          rows={2}
+          rows={1}
           className={cn(
-            "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3",
-            "text-text-primary placeholder-text-secondary/50",
-            "focus:outline-none focus:border-white/25 focus:bg-white/8",
-            "resize-none transition-all duration-200 text-sm",
+            "w-full h-full bg-[#0d0d1a] border border-white/[0.06] rounded-[4px] px-5 py-4",
+            "text-white/65 placeholder-white/15",
+            "focus:outline-none focus:border-white/15",
+            "resize-none transition-all duration-200 text-[13px] tracking-[0.02em]",
           )}
         />
-        <span className="absolute bottom-2 right-3 text-xs text-text-secondary/50">
-          {input.length}/{maxLength}
-        </span>
       </div>
       <button
+        type="button"
         onClick={handleSubmit}
         disabled={loading || disabled || !input.trim()}
         className={cn(
-          "px-5 py-3 rounded-xl font-medium text-sm flex items-center gap-2 transition-all duration-200",
-          "bg-white/10 hover:bg-white/15 text-text-primary",
-          "disabled:opacity-40 disabled:cursor-not-allowed",
+          "px-8 rounded-[4px] font-bold text-[12px] tracking-[0.1em] flex items-center gap-2 transition-all duration-200",
+          "disabled:opacity-30 disabled:cursor-not-allowed text-[#0a0a0f]",
         )}
+        style={{ background: loading ? `${accentColor}80` : accentColor }}
       >
         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-        发送
+        发 送
       </button>
     </div>
   );

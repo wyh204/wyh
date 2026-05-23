@@ -1,64 +1,52 @@
 "use client";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { BookOpen, Calculator, Globe, Atom, FlaskConical, type LucideIcon } from "lucide-react";
 import type { Subject } from "@/types";
-import { cn } from "@/lib/utils";
 
-const subjectMeta: Record<Subject, { name: string; color: string; Icon: LucideIcon; desc: string }> = {
-  yuwen: { name: "语文", color: "#e85d3a", Icon: BookOpen, desc: "AI 文学鉴赏与作文辅导" },
-  math: { name: "数学", color: "#4da6ff", Icon: Calculator, desc: "智能解题与数学家故事" },
-  english: { name: "英语", color: "#3dd68c", Icon: Globe, desc: "语法精讲与写作指导" },
-  physics: { name: "物理", color: "#a78bfa", Icon: Atom, desc: "交互式实验与物理学家故事" },
-  chemistry: { name: "化学", color: "#f0a040", Icon: FlaskConical, desc: "交互式实验与化学家故事" },
+const subjectMeta: Record<Subject, { name: string; color: string; Icon: LucideIcon; desc: string; enName: string }> = {
+  yuwen: { name: "语 文", color: "#a78bfa", Icon: BookOpen, desc: "现代文学鉴赏 · 古文精读 · 作文辅导", enName: "Chinese" },
+  math: { name: "数 学", color: "#60a5fa", Icon: Calculator, desc: "智能解题 · 数学史故事 · 考点分析", enName: "Math" },
+  english: { name: "英 语", color: "#34d399", Icon: Globe, desc: "语法精讲 · 作文指导 · 满分大纲", enName: "English" },
+  physics: { name: "物 理", color: "#c084fc", Icon: Atom, desc: "交互式实验 · 物理学家故事", enName: "Physics" },
+  chemistry: { name: "化 学", color: "#f0a040", Icon: FlaskConical, desc: "交互式实验 · 化学家故事", enName: "Chemistry" },
 };
 
 export default function SubjectCard({ subject }: { subject: Subject }) {
   const meta = subjectMeta[subject];
-  const x = useMotionValue(0.5);
-  const y = useMotionValue(0.5);
-  const rotateX = useSpring(useTransform(y, [0, 1], [8, -8]), { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(useTransform(x, [0, 1], [-8, 8]), { stiffness: 200, damping: 20 });
-
-  function handleMouseMove(e: React.MouseEvent) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width);
-    y.set((e.clientY - rect.top) / rect.height);
-  }
-
-  function handleMouseLeave() {
-    x.set(0.5);
-    y.set(0.5);
-  }
 
   return (
     <Link href={`/${subject}`}>
       <motion.div
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className={cn(
-          "glass-card p-6 cursor-pointer select-none relative overflow-hidden group",
-          "hover:shadow-lg transition-shadow duration-300"
-        )}
-        whileHover={{ y: -4 }}
+        className="content-card p-6 cursor-pointer group relative overflow-hidden h-full"
+        whileHover={{ y: -2 }}
+        style={{ ["--accent-color" as string]: meta.color }}
       >
         <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{
-            background: `radial-gradient(circle at 50% 50%, ${meta.color}15 0%, transparent 70%)`,
-          }}
+          className="absolute top-0 left-0 right-0 h-[120px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{ background: `linear-gradient(180deg, ${meta.color}0D, transparent)` }}
         />
-        <div className="relative z-10">
-          <meta.Icon className="w-10 h-10 mb-3" style={{ color: meta.color }} />
-          <h3 className="text-xl font-bold mb-1" style={{ color: meta.color }}>
+
+        <div className="relative z-10 flex flex-col h-full">
+          <div
+            className="text-[10px] tracking-[0.2em] font-bold mb-4"
+            style={{ color: meta.color }}
+          >
             {meta.name}
-          </h3>
-          <p className="text-sm text-text-secondary">{meta.desc}</p>
+          </div>
+
+          <p className="text-[13px] leading-relaxed text-white/40 mb-6 flex-1">
+            {meta.desc}
+          </p>
+
+          <p className="text-[10px] tracking-[0.1em] text-white/10 font-light italic">
+            {meta.enName}
+          </p>
         </div>
+
         <div
-          className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{ background: `linear-gradient(90deg, transparent, ${meta.color}, transparent)` }}
+          className="absolute bottom-0 left-0 h-[3px] transition-all duration-300 ease-out group-hover:w-full"
+          style={{ background: meta.color, width: "0%" }}
         />
       </motion.div>
     </Link>
