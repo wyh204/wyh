@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Trash2 } from "lucide-react";
+import { X, Trash2, Heart } from "lucide-react";
 import type { HistoryItem } from "@/types";
 import { formatDate } from "@/lib/utils";
 
@@ -13,7 +13,7 @@ interface Props {
   isFavorite: (id: string) => boolean;
 }
 
-export default function HistoryDrawer({ open, onClose, history, onClearAll }: Props) {
+export default function HistoryDrawer({ open, onClose, history, onToggleFavorite, onClearAll, isFavorite }: Props) {
   return (
     <AnimatePresence>
       {open && (
@@ -36,11 +36,13 @@ export default function HistoryDrawer({ open, onClose, history, onClearAll }: Pr
               <h3 className="text-[12px] tracking-[0.15em] font-bold text-white/60 uppercase">历史记录</h3>
               <div className="flex items-center gap-3">
                 {history.length > 0 && (
-                  <button type="button" onClick={onClearAll} className="text-white/20 hover:text-red-400 transition-colors">
+                  <button type="button" onClick={onClearAll} aria-label="清除全部历史"
+                    className="text-white/20 hover:text-red-400 transition-colors">
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 )}
-                <button type="button" onClick={onClose} className="text-white/30 hover:text-white/60 transition-colors">
+                <button type="button" onClick={onClose} aria-label="关闭"
+                  className="text-white/30 hover:text-white/60 transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -51,9 +53,15 @@ export default function HistoryDrawer({ open, onClose, history, onClearAll }: Pr
               ) : (
                 <div className="space-y-2">
                   {history.map((item) => (
-                    <div key={item.id} className="content-card p-4">
-                      <div className="text-[10px] tracking-[0.1em] text-white/20 mb-1.5">{formatDate(item.timestamp)}</div>
-                      <p className="text-[12px] text-white/50 truncate">{item.input}</p>
+                    <div key={item.id} className="content-card p-4 flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="text-[10px] tracking-[0.1em] text-white/20 mb-1.5">{formatDate(item.timestamp)}</div>
+                        <p className="text-[12px] text-white/50 truncate">{item.input}</p>
+                      </div>
+                      <button type="button" onClick={() => onToggleFavorite(item)} aria-label={isFavorite(item.id) ? "取消收藏" : "收藏"}
+                        className="text-white/20 hover:text-red-400 transition-colors flex-shrink-0">
+                        <Heart className={`w-3 h-3 ${isFavorite(item.id) ? "fill-red-400 text-red-400" : ""}`} />
+                      </button>
                     </div>
                   ))}
                 </div>

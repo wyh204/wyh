@@ -32,7 +32,8 @@ export default function FavoriteDrawer({ open, onClose, favorites, onRemove }: P
           >
             <div className="flex items-center justify-between p-6 border-b border-white/[0.06]">
               <h3 className="text-[12px] tracking-[0.15em] font-bold text-white/60 uppercase">我的收藏</h3>
-              <button type="button" onClick={onClose} className="text-white/30 hover:text-white/60 transition-colors">
+              <button type="button" onClick={onClose} aria-label="关闭"
+                className="text-white/30 hover:text-white/60 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -47,7 +48,8 @@ export default function FavoriteDrawer({ open, onClose, favorites, onRemove }: P
                         <div className="text-[10px] tracking-[0.1em] text-white/20 mb-1.5">{formatDate(item.timestamp)}</div>
                         <p className="text-[12px] text-white/50 truncate">{item.input}</p>
                       </div>
-                      <button type="button" onClick={() => onRemove(item.id)} className="text-white/20 hover:text-red-400 transition-colors flex-shrink-0">
+                      <button type="button" onClick={() => onRemove(item.id)} aria-label="移除收藏"
+                        className="text-white/20 hover:text-red-400 transition-colors flex-shrink-0">
                         <Trash2 className="w-3 h-3" />
                       </button>
                     </div>

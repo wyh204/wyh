@@ -118,7 +118,7 @@ export default function PhysicsExperimentPage() {
           </p>
         </div>
         <div className="mt-8">
-          <ExperimentCanvas experimentId={experimentId} color={ACCENT} />
+          <ExperimentCanvas experimentId={experimentId} />
         </div>
         <div className="mt-6">
           <button

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
 import SkeletonLoader from "@/components/shared/SkeletonLoader";
 import ErrorToast from "@/components/shared/ErrorToast";
@@ -19,8 +19,10 @@ export default function MathPage() {
   const [streaming, setStreaming] = useState(false);
   const { save, favorites, toggleFavorite } = useHistory();
   const [currentItem, setCurrentItem] = useState<HistoryItem | null>(null);
+  const lastInputRef = useRef("");
 
   const handleSubmit = useCallback(async (input: string) => {
+    lastInputRef.current = input;
     setLoading(true);
     setError(null);
     setResult(null);
@@ -114,7 +116,7 @@ export default function MathPage() {
             />
           </div>
         )}
-        {error && <ErrorToast message={error.message} code={error.code} onRetry={() => {}} onDismiss={() => setError(null)} />}
+        {error && <ErrorToast message={error.message} code={error.code} onRetry={lastInputRef.current ? () => handleSubmit(lastInputRef.current) : undefined} onDismiss={() => setError(null)} />}
       </div>
     </div>
   );

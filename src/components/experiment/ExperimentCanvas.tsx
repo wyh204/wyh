@@ -9,21 +9,20 @@ const ChemistryLabScene = dynamic(() => import("./ChemistryLabScene"), { ssr: fa
 
 interface Props {
   experimentId: string;
-  color: string;
 }
 
-export default function ExperimentCanvas({ experimentId, color }: Props) {
+export default function ExperimentCanvas({ experimentId }: Props) {
   const cls = "w-full h-72 md:h-96 rounded-[4px] overflow-hidden content-card";
 
   switch (experimentId) {
-    case "light-refraction": return <div className={cls}><RefractionScene /></div>;
-    case "electric-circuit": return <div className={cls}><CircuitScene /></div>;
+    case "refraction": return <div className={cls}><RefractionScene /></div>;
+    case "circuit": return <div className={cls}><CircuitScene /></div>;
     case "buoyancy": return <div className={cls}><BuoyancyScene /></div>;
     case "convex-lens": return <div className={cls}><LensScene /></div>;
-    case "acid-base":
-    case "oxygen-prep":
-    case "flame-test":
-    case "water-electrolysis":
+    case "oxygen":
+    case "co2":
+    case "metal-acid":
+    case "titration":
       return <div className={cls}><ChemistryLabScene /></div>;
     default:
       return (

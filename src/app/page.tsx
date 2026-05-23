@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import SubjectCard from "@/components/shared/SubjectCard";
@@ -64,14 +63,6 @@ function HeroTitle() {
 }
 
 export default function HomePage() {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handler = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
-
   return (
     <div className="relative min-h-[calc(100vh-3.5rem)]">
       <ThreeBackground />
