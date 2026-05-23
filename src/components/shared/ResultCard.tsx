@@ -2,8 +2,7 @@
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Copy, Heart, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { cn, copyToClipboard } from "@/lib/utils";
 import type { HistoryItem } from "@/types";
 
@@ -25,11 +24,16 @@ export default function ResultCard({
   streaming = false,
 }: Props) {
   const [copied, setCopied] = useState(false);
+  const mountedRef = useRef(true);
 
   async function handleCopy() {
     await copyToClipboard(content);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => {
+      if (mountedRef.current) {
+        setCopied(false);
+      }
+    }, 2000);
   }
 
   return (
@@ -40,6 +44,7 @@ export default function ResultCard({
     >
       {/* Left accent bar */}
       <div
+        aria-hidden="true"
         className="w-[3px] rounded-full flex-shrink-0 mr-6"
         style={{ background: `linear-gradient(180deg, ${accentColor}, ${accentColor}40)` }}
       />
@@ -55,12 +60,14 @@ export default function ResultCard({
           </span>
           <div className="flex items-center gap-4">
             <button
+              type="button"
               onClick={handleCopy}
               className="text-[10px] tracking-[0.08em] text-white/30 hover:text-white/60 transition-colors"
             >
               {copied ? "已复制" : "复制"}
             </button>
             <button
+              type="button"
               onClick={onToggleFavorite}
               className={cn(
                 "text-[10px] tracking-[0.08em] transition-colors",
