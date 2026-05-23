@@ -1,29 +1,43 @@
-import { NextRequest, NextResponse } from "next/server";
-import { callDeepSeek } from "@/lib/deepseek";
+import { NextRequest } from "next/server";
+import { callDeepSeekStream } from "@/lib/deepseek";
 import { experimentPrompt } from "@/lib/prompts";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     if (!body.experimentName || !body.scientist) {
-      return NextResponse.json(
-        { error: "缺少实验信息", code: "INVALID_REQUEST" },
-        { status: 400 },
-      );
+      return new Response(JSON.stringify({ error: "缺少必填字段", code: "INVALID_REQUEST" }), { status: 400 });
     }
 
     const { system, user } = experimentPrompt(body.experimentName, body.scientist);
-    const responseText = await callDeepSeek(system, user);
-    return NextResponse.json({ data: { raw: responseText } });
-  } catch (e) {
-    if (e instanceof Error) {
-      if (e.message === "NO_API_KEY") {
-        return NextResponse.json({ error: "API Key 未配置", code: "NO_API_KEY" }, { status: 503 });
-      }
-      if (e.message === "TIMEOUT") {
-        return NextResponse.json({ error: "AI 响应超时，请重试", code: "TIMEOUT" }, { status: 504 });
-      }
-    }
-    return NextResponse.json({ error: "AI 服务异常，请稍后重试", code: "AI_ERROR" }, { status: 500 });
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          let full = "";
+          for await (const chunk of callDeepSeekStream(system, user)) {
+            full += chunk;
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ delta: chunk })}\n\n`));
+          }
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ done: true, full })}\n\n`));
+          controller.close();
+        } catch (e) {
+          const msg = e instanceof Error ? e.message : "AI_ERROR";
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: msg })}\n\n`));
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
+      },
+    });
+  } catch {
+    return new Response(JSON.stringify({ error: "服务异常", code: "AI_ERROR" }), { status: 500 });
   }
 }
