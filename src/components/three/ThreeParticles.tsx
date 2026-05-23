@@ -3,10 +3,9 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-function Particles({ color = "#a78bfa" }: { color?: string }) {
+function Particles({ color = "#a78bfa", scrollY = 0 }: { color?: string; scrollY?: number }) {
   const pointsRef = useRef<THREE.Points>(null);
   const count = 200;
-
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -21,29 +20,27 @@ function Particles({ color = "#a78bfa" }: { color?: string }) {
     if (pointsRef.current) {
       pointsRef.current.rotation.y += 0.0003;
       pointsRef.current.rotation.x += 0.0001;
+      pointsRef.current.position.y = scrollY * 0.0003;
     }
   });
 
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
-        />
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
       <pointsMaterial size={0.02} color={color} transparent opacity={0.4} sizeAttenuation />
     </points>
   );
 }
 
-export default function ThreeParticles({ color }: { color?: string }) {
+interface Props { color?: string; scrollY?: number; }
+
+export default function ThreeParticles({ color, scrollY = 0 }: Props) {
   return (
-    <div className="fixed inset-0 -z-10 opacity-50 pointer-events-none">
+    <div className="fixed inset-0 -z-10 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 3], fov: 75 }} dpr={[1, 1]} gl={{ alpha: true, antialias: false }}>
-        <Particles color={color} />
+        <Particles color={color} scrollY={scrollY} />
       </Canvas>
     </div>
   );
