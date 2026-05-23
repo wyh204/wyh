@@ -1,0 +1,107 @@
+<h2>字体艺术化方向</h2>
+<p class="subtitle">当前使用系统默认 sans-serif，缺乏个性。三种字体方案让页面更有"艺术感"</p>
+
+<div class="cards">
+  <div class="card" data-choice="serif-mix" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:32px;background:#0a0a0f;">
+      <div style="margin-bottom:24px;">
+        <div style="font-family:serif;font-size:56px;font-weight:900;letter-spacing:0.06em;line-height:1.1;color:#fff;margin-bottom:8px;">
+          探<span style="color:#a78bfa;">索</span>
+        </div>
+        <div style="font-family:serif;font-size:56px;font-weight:900;letter-spacing:0.06em;line-height:1.1;color:#fff;">
+          知<span style="color:#60a5fa;">识</span> · 宇<span style="color:#34d399;">宙</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:24px;align-items:flex-start;">
+        <div style="font-family:serif;font-size:14px;font-weight:700;color:#a78bfa;letter-spacing:0.08em;writing-mode:vertical-rl;">语 文</div>
+        <div style="font-family:serif;font-size:14px;font-weight:700;color:#60a5fa;letter-spacing:0.08em;writing-mode:vertical-rl;">数 学</div>
+        <div style="font-family:serif;font-size:14px;font-weight:700;color:#34d399;letter-spacing:0.08em;writing-mode:vertical-rl;">英 语</div>
+        <div style="font-family:serif;font-size:14px;font-weight:700;color:#c084fc;letter-spacing:0.08em;writing-mode:vertical-rl;">物 理</div>
+        <div style="font-family:serif;font-size:14px;font-weight:700;color:#f0a040;letter-spacing:0.08em;writing-mode:vertical-rl;">化 学</div>
+      </div>
+      <div style="margin-top:24px;font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;">
+        AI 驱动的互动学习体验 — 让每一位中小学生感受知识的魅力
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. 衬线中文标题 + 竖排装饰</h3>
+      <p>标题用宋体/明体 (serif)，笔画有书法韵味。学科名竖排展示，像古籍目录。正文保持系统无衬线保证可读性。加载 Noto Serif SC（~2MB，CDN 缓存）。</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>中文书法感强，匹配语文/古文气质</li><li>竖排学科名独特，一眼记住</li><li>免费 Google Font</li></ul></div>
+        <div class="cons"><h4>缺点</h4><ul><li>2MB 字体文件，首屏加载需优化</li><li>宋体在暗色背景下小字号可读性一般</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="modern-geometric" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:32px;background:#0a0a0f;">
+      <div style="margin-bottom:24px;">
+        <div style="font-family:'Georgia','Times New Roman',serif;font-size:64px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;color:#fff;margin-bottom:4px;">
+          <span style="display:inline-block;border-bottom:4px solid #a78bfa;padding-bottom:4px;">探索</span>
+          <span style="display:inline-block;border-bottom:4px solid #60a5fa;padding-bottom:4px;">·</span>
+          <span style="display:inline-block;border-bottom:4px solid #34d399;padding-bottom:4px;">知识</span>
+        </div>
+        <div style="font-family:'Georgia','Times New Roman',serif;font-size:64px;font-weight:300;letter-spacing:-0.02em;line-height:1.0;color:rgba(255,255,255,0.3);font-style:italic;">
+          Universe
+        </div>
+      </div>
+      <div style="display:flex;gap:2px;margin-bottom:20px;">
+        <div style="width:40px;height:200px;display:flex;flex-direction:column;justify-content:space-between;">
+          <div style="font-family:monospace;font-size:10px;letter-spacing:0.2em;color:#a78bfa;writing-mode:vertical-rl;font-weight:700;">语 文 Chinese</div>
+        </div>
+        <div style="width:40px;height:200px;display:flex;flex-direction:column;justify-content:space-between;">
+          <div style="font-family:monospace;font-size:10px;letter-spacing:0.2em;color:#60a5fa;writing-mode:vertical-rl;font-weight:700;">数 学 Math</div>
+        </div>
+        <div style="width:40px;height:200px;display:flex;flex-direction:column;justify-content:space-between;">
+          <div style="font-family:monospace;font-size:10px;letter-spacing:0.2em;color:#34d399;writing-mode:vertical-rl;font-weight:700;">英 语 English</div>
+        </div>
+        <div style="width:40px;height:200px;display:flex;flex-direction:column;justify-content:space-between;">
+          <div style="font-family:monospace;font-size:10px;letter-spacing:0.2em;color:#c084fc;writing-mode:vertical-rl;font-weight:700;">物 理 Physics</div>
+        </div>
+        <div style="width:40px;height:200px;display:flex;flex-direction:column;justify-content:space-between;">
+          <div style="font-family:monospace;font-size:10px;letter-spacing:0.2em;color:#f0a040;writing-mode:vertical-rl;font-weight:700;">化 学 Chemistry</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. 几何现代体 + 混字重</h3>
+      <p>标题用几何感无衬线（系统黑体 bold），与英文斜体细体混排形成对比——"探索"用 900 粗体，"Universe"用 300 细斜体。同一行内字重对比本身就很"设计感"。学科标签用竖排等宽字体。零额外字体下载。</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>零额外加载，首屏即显</li><li>字重对比 + 底线装饰足够有设计感</li><li>暗色背景下中英文混排层次清晰</li></ul></div>
+        <div class="cons"><h4>缺点</h4><ul><li>仍然依赖系统字体，不同平台表现有差异</li><li>不如专用字体统一</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="brush-art" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:32px;background:#0a0a0f;position:relative;overflow:hidden;">
+      <!-- Simulated brush stroke background -->
+      <div style="position:absolute;right:-20px;top:20px;width:200px;height:400px;opacity:0.06;background:radial-gradient(ellipse at center,#a78bfa 0%,transparent 70%);"></div>
+      <div style="margin-bottom:24px;position:relative;">
+        <div style="font-size:72px;font-weight:900;letter-spacing:0.15em;line-height:1.0;color:#fff;display:flex;align-items:baseline;gap:8px;">
+          <span style="background:linear-gradient(180deg,#fff 0%,rgba(167,139,250,0.6) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">探</span>
+          <span style="background:linear-gradient(180deg,#fff 0%,rgba(96,165,250,0.6) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">索</span>
+          <span style="font-size:24px;color:rgba(255,255,255,0.2);">·</span>
+          <span style="background:linear-gradient(180deg,#fff 0%,rgba(52,211,153,0.6) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">知</span>
+          <span style="background:linear-gradient(180deg,#fff 0%,rgba(240,160,64,0.6) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">识</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+        <div style="font-size:12px;letter-spacing:0.2em;font-weight:700;">
+          <span style="color:#a78bfa;">語</span> <span style="color:rgba(255,255,255,0.2);font-size:8px;margin:0 4px;">/</span> <span style="color:#60a5fa;">數</span> <span style="color:rgba(255,255,255,0.2);font-size:8px;margin:0 4px;">/</span> <span style="color:#34d399;">英</span> <span style="color:rgba(255,255,255,0.2);font-size:8px;margin:0 4px;">/</span> <span style="color:#c084fc;">理</span> <span style="color:rgba(255,255,255,0.2);font-size:8px;margin:0 4px;">/</span> <span style="color:#f0a040;">化</span>
+        </div>
+      </div>
+      <div style="margin-top:16px;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.2em;">
+        学 而 时 习 之 · 不 亦 说 乎
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. 渐隐水墨风 + 繁体装饰</h3>
+      <p>标题用渐变色 (gradient text)——每个字从上到下从白渐变到对应学科色，像水墨晕染。学科名用繁体汉字（語/數/英/理/化），底部一行古语做装饰文字。仅用 CSS gradient + 字距，零额外字体。</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>渐变文字视觉冲击力一眼记住</li><li>繁体字 + 古语增加文化质感</li><li>零额外字体加载，纯CSS实现</li></ul></div>
+        <div class="cons"><h4>缺点</h4><ul><li>渐变文字对小学生可能稍显"高冷"</li><li>繁体字部分学生可能不认识</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>

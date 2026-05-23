@@ -1,0 +1,112 @@
+<h2>Lando Norris 风格 → 教育 App 适配方案</h2>
+<p class="subtitle">核心原则：暗色基底 + 单一学科色点缀 + 大间距 + 全出血排版</p>
+
+<div class="mockup" style="margin-bottom:32px;">
+  <div class="mockup-header">新首页 — 五学科编排式目录</div>
+  <div class="mockup-body" style="background:#0a0a0f;color:#fff;font-family:system-ui;padding:0;overflow:hidden;">
+    <!-- Nav -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:24px 48px;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <div style="font-weight:700;font-size:18px;letter-spacing:0.08em;color:#fff;">GLUT AING</div>
+      <div style="display:flex;gap:32px;font-size:12px;letter-spacing:0.06em;color:rgba(255,255,255,0.5);">
+        <span style="color:#fff;">课程</span><span>历史</span><span>收藏</span>
+      </div>
+    </div>
+    <!-- Hero -->
+    <div style="padding:80px 48px 48px;text-align:left;">
+      <div style="font-size:64px;font-weight:900;letter-spacing:0.04em;line-height:1.1;margin-bottom:16px;">
+        <div>探索</div>
+        <div style="display:flex;gap:16px;align-items:baseline;">
+          <span>知识</span>
+          <span style="color:#a78bfa;font-style:italic;">·</span>
+          <span>宇宙</span>
+        </div>
+      </div>
+      <p style="font-size:14px;color:rgba(255,255,255,0.4);letter-spacing:0.04em;max-width:480px;line-height:1.6;">AI 驱动的互动学习体验，覆盖语文、数学、英语、物理、化学五大学科。让每一位中小学生感受知识的魅力。</p>
+    </div>
+    <!-- Subject Row — Large editorial cards -->
+    <div style="display:flex;gap:12px;padding:0 48px 80px;">
+      <div style="flex:1;background:#0d0d1a;border:1px solid rgba(167,139,250,0.15);border-radius:4px;overflow:hidden;transition:all 0.3s;cursor:pointer;">
+        <div style="height:200px;background:linear-gradient(180deg,rgba(167,139,250,0.12),transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;">
+          <div style="font-size:10px;letter-spacing:0.12em;color:#a78bfa;margin-bottom:8px;">语 文</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:0.04em;line-height:1.2;">现代文学<br>古文精读<br>作文辅导</div>
+        </div>
+        <div style="height:3px;background:#a78bfa;width:0;transition:width 0.3s;"></div>
+      </div>
+      <div style="flex:1;background:#0d0d1a;border:1px solid rgba(96,165,250,0.15);border-radius:4px;overflow:hidden;">
+        <div style="height:200px;background:linear-gradient(180deg,rgba(96,165,250,0.12),transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;">
+          <div style="font-size:10px;letter-spacing:0.12em;color:#60a5fa;margin-bottom:8px;">数 学</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:0.04em;line-height:1.2;">智能解题<br>数学史故事<br>考点分析</div>
+        </div>
+        <div style="height:3px;background:#60a5fa;width:0;"></div>
+      </div>
+      <div style="flex:1;background:#0d0d1a;border:1px solid rgba(52,211,153,0.15);border-radius:4px;overflow:hidden;">
+        <div style="height:200px;background:linear-gradient(180deg,rgba(52,211,153,0.12),transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;">
+          <div style="font-size:10px;letter-spacing:0.12em;color:#34d399;margin-bottom:8px;">英 语</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:0.04em;line-height:1.2;">语法精讲<br>作文指导<br>满分大纲</div>
+        </div>
+        <div style="height:3px;background:#34d399;width:0;"></div>
+      </div>
+      <div style="flex:1;background:#0d0d1a;border:1px solid rgba(192,132,252,0.15);border-radius:4px;overflow:hidden;">
+        <div style="height:200px;background:linear-gradient(180deg,rgba(192,132,252,0.12),transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;">
+          <div style="font-size:10px;letter-spacing:0.12em;color:#c084fc;margin-bottom:8px;">物 理</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:0.04em;line-height:1.2;">交互实验<br>物理学家<br>动手探究</div>
+        </div>
+        <div style="height:3px;background:#c084fc;width:0;"></div>
+      </div>
+      <div style="flex:1;background:#0d0d1a;border:1px solid rgba(240,160,64,0.15);border-radius:4px;overflow:hidden;">
+        <div style="height:200px;background:linear-gradient(180deg,rgba(240,160,64,0.12),transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;">
+          <div style="font-size:10px;letter-spacing:0.12em;color:#f0a040;margin-bottom:8px;">化 学</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:0.04em;line-height:1.2;">交互实验<br>化学家故事<br>动手探究</div>
+        </div>
+        <div style="height:3px;background:#f0a040;width:0;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mockup">
+  <div class="mockup-header">学科内页 — 语文为例（大间距 + 单色点缀）</div>
+  <div class="mockup-body" style="background:#0a0a0f;color:#fff;font-family:system-ui;padding:0;overflow:hidden;">
+    <!-- Breadcrumb -->
+    <div style="padding:32px 48px 0;font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.3);">
+      课程 / 语 文
+    </div>
+    <!-- Header -->
+    <div style="padding:32px 48px 48px;">
+      <div style="font-size:56px;font-weight:900;letter-spacing:0.04em;line-height:1.1;margin-bottom:8px;">
+        <div>语 文</div>
+        <div style="color:#a78bfa;font-style:italic;font-weight:300;">Chinese</div>
+      </div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.35);letter-spacing:0.04em;max-width:420px;">现代文学鉴赏 · 古文精读 · 作文辅导。选择学习模式，开启深度语文之旅。</p>
+    </div>
+    <!-- Mode selector — minimal underline style -->
+    <div style="display:flex;gap:0;padding:0 48px;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <div style="padding:16px 28px;font-size:12px;letter-spacing:0.08em;color:#fff;border-bottom:2px solid #a78bfa;">现代文学</div>
+      <div style="padding:16px 28px;font-size:12px;letter-spacing:0.08em;color:rgba(255,255,255,0.3);border-bottom:2px solid transparent;">古文学习</div>
+      <div style="padding:16px 28px;font-size:12px;letter-spacing:0.08em;color:rgba(255,255,255,0.3);border-bottom:2px solid transparent;">作文 HELP</div>
+    </div>
+    <!-- Input area -->
+    <div style="padding:40px 48px;display:flex;gap:12px;">
+      <div style="flex:1;background:#0d0d1a;border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:20px;font-size:13px;color:rgba(255,255,255,0.3);letter-spacing:0.04em;">输入文章篇名...</div>
+      <div style="background:#a78bfa;color:#0a0a0f;padding:0 32px;display:flex;align-items:center;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:0.1em;cursor:pointer;">发 送</div>
+    </div>
+    <!-- Result area — large text block with generous padding -->
+    <div style="margin:0 48px 48px;background:#0d0d1a;border-left:3px solid #a78bfa;padding:40px 48px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
+        <div style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.2);">AI 回 答</div>
+        <div style="display:flex;gap:16px;">
+          <span style="font-size:10px;letter-spacing:0.08em;color:rgba(255,255,255,0.3);cursor:pointer;">复制</span>
+          <span style="font-size:10px;letter-spacing:0.08em;color:rgba(255,255,255,0.3);cursor:pointer;">收藏</span>
+        </div>
+      </div>
+      <div style="font-size:14px;line-height:1.8;color:rgba(255,255,255,0.7);letter-spacing:0.02em;">
+        <p style="color:#a78bfa;font-weight:600;margin-bottom:12px;">【作者介绍】</p>
+        <p style="margin-bottom:24px;">鲁迅（1881-1936），原名周树人，中国现代文学奠基人...</p>
+        <p style="color:#a78bfa;font-weight:600;margin-bottom:12px;">【写作背景】</p>
+        <p style="margin-bottom:24px;">本文写于1921年，正值五四运动后...</p>
+        <p style="color:#a78bfa;font-weight:600;margin-bottom:12px;">【文章鉴赏】</p>
+        <p>这篇小说通过第一人称视角...</p>
+      </div>
+    </div>
+  </div>
+</div>

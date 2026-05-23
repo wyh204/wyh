@@ -5,13 +5,12 @@ import { useState } from "react";
 import HistoryDrawer from "@/components/shared/HistoryDrawer";
 import FavoriteDrawer from "@/components/shared/FavoriteDrawer";
 import { useHistory } from "@/hooks/useHistory";
-import { removeFavorite } from "@/lib/storage";
 import type { HistoryItem } from "@/types";
 
 export default function Navbar() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [favOpen, setFavOpen] = useState(false);
-  const { history, favorites, toggleFavorite, clearAll } = useHistory();
+  const { history, favorites, toggleFavorite, clearAll, removeFav } = useHistory();
 
   return (
     <>
@@ -47,7 +46,7 @@ export default function Navbar() {
         open={favOpen}
         onClose={() => setFavOpen(false)}
         favorites={favorites}
-        onRemove={removeFavorite}
+        onRemove={removeFav}
       />
     </>
   );

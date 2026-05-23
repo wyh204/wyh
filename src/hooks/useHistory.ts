@@ -55,5 +55,10 @@ export function useHistory() {
     refresh();
   }, [refresh]);
 
-  return { history, favorites, save, toggleFavorite, clearAll, refresh, isFavorite };
+  const removeFav = useCallback((id: string) => {
+    removeFavorite(id);
+    refresh();
+  }, [refresh]);
+
+  return { history, favorites, save, toggleFavorite, clearAll, removeFav, refresh, isFavorite };
 }

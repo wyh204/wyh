@@ -1,0 +1,101 @@
+<h2>Lando 风格 + 动态视觉增强</h2>
+<p class="subtitle">保留克制审美，在关键节点加入动效，让暗色页面"呼吸"起来</p>
+
+<div style="margin-bottom:40px;">
+  <h3 style="font-size:14px;letter-spacing:0.08em;color:var(--text-secondary);margin-bottom:20px;">动效清单（共 6 项）</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:20px;">
+      <div style="font-size:11px;letter-spacing:0.08em;color:#a78bfa;margin-bottom:6px;">01 字显动画</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;">首页大标题逐字/逐行从下方淡入，带 blur 消散。像高端杂志封面标题的出场方式。</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:20px;">
+      <div style="font-size:11px;letter-spacing:0.08em;color:#60a5fa;margin-bottom:6px;">02 卡片 Hover 光晕</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;">学科卡片 hover 时底部色条从左滑入铺满，卡片边缘出现同色系微光 (box-shadow glow)，背景微微提亮。</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:20px;">
+      <div style="font-size:11px;letter-spacing:0.08em;color:#34d399;margin-bottom:6px;">03 光标跟随聚光</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;">首页 Hero 区域跟随鼠标移动出现一个 300px 的径向光斑，像手电筒照在暗色背景上，离开后淡出。</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:20px;">
+      <div style="font-size:11px;letter-spacing:0.08em;color:#c084fc;margin-bottom:6px;">04 滚动视差</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;">3D 粒子背景随滚动缓慢上移（速度 0.3x），产生空间纵深感。学科卡片进入视口时依次浮入。</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:20px;">
+      <div style="font-size:11px;letter-spacing:0.08em;color:#f0a040;margin-bottom:6px;">05 AI 回答流式打字</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;">AI 结果逐字打出（streaming），左侧色条随文字增长向下延伸，光标闪烁到段落结束消失。</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:20px;">
+      <div style="font-size:11px;letter-spacing:0.08em;color:#818cf8;margin-bottom:6px;">06 页面过渡</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;">路由切换时 3D 粒子重组 + 页面从下往上滑入 + 旧页面淡出。150ms 快过渡，不拖沓。</div>
+    </div>
+  </div>
+</div>
+
+<div class="mockup">
+  <div class="mockup-header">动效位置示意 — 首页各区域标注</div>
+  <div class="mockup-body" style="background:#0a0a0f;color:#fff;font-family:system-ui;padding:48px;position:relative;overflow:hidden;">
+
+    <!-- Hero area with cursor spotlight marker -->
+    <div style="position:relative;margin-bottom:56px;padding:40px;border:1px dashed rgba(167,139,250,0.2);border-radius:4px;">
+      <div style="position:absolute;top:-10px;left:20px;background:#a78bfa;color:#000;font-size:9px;padding:4px 12px;letter-spacing:0.1em;font-weight:700;">03 光标聚光 · 01 字显动画</div>
+      <div style="font-size:64px;font-weight:900;letter-spacing:0.04em;line-height:1.1;margin-bottom:16px;">
+        <div style="display:inline-block;border-bottom:2px solid #a78bfa;">探</div><div style="display:inline-block;">索</div>
+        <div style="display:inline-block;border-bottom:2px solid #60a5fa;margin-left:12px;">·</div>
+        <div style="display:inline-block;border-bottom:2px solid #34d399;">知</div><div style="display:inline-block;">识</div>
+        <div style="display:inline-block;border-bottom:2px solid #c084fc;margin-left:12px;">·</div>
+        <div style="display:inline-block;border-bottom:2px solid #f0a040;">宇</div><div style="display:inline-block;">宙</div>
+      </div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.35);letter-spacing:0.04em;max-width:400px;">AI 驱动的互动学习体验</p>
+      <!-- Simulated cursor glow -->
+      <div style="position:absolute;right:40px;top:50%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,0.08),transparent 70%);pointer-events:none;"></div>
+    </div>
+
+    <!-- Subject cards with hover glow markers -->
+    <div style="position:relative;margin-bottom:32px;padding:20px;border:1px dashed rgba(96,165,250,0.2);border-radius:4px;">
+      <div style="position:absolute;top:-10px;left:20px;background:#60a5fa;color:#000;font-size:9px;padding:4px 12px;letter-spacing:0.1em;font-weight:700;">02 卡片 Hover · 04 滚动视差入场</div>
+      <div style="display:flex;gap:12px;">
+        <div style="flex:1;background:#0d0d1a;border:1px solid rgba(167,139,250,0.12);border-radius:4px;padding:24px;position:relative;">
+          <div style="font-size:10px;letter-spacing:0.12em;color:#a78bfa;margin-bottom:12px;">语 文</div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:0.04em;line-height:1.4;">现代文学<br>古文精读<br>作文辅导</div>
+          <div style="margin-top:16px;height:3px;background:linear-gradient(90deg,#a78bfa,transparent);width:60%;border-radius:2px;"></div>
+          <!-- hover glow simulation -->
+          <div style="position:absolute;inset:0;border-radius:4px;box-shadow:0 0 20px rgba(167,139,250,0.08);opacity:0.3;pointer-events:none;"></div>
+        </div>
+        <div style="flex:1;background:#0d0d1a;border:1px solid rgba(96,165,250,0.12);border-radius:4px;padding:24px;">
+          <div style="font-size:10px;letter-spacing:0.12em;color:#60a5fa;margin-bottom:12px;">数 学</div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:0.04em;line-height:1.4;">智能解题<br>数学史故事<br>考点分析</div>
+          <div style="margin-top:16px;height:3px;background:linear-gradient(90deg,#60a5fa,transparent);width:60%;border-radius:2px;"></div>
+        </div>
+        <div style="flex:1;background:#0d0d1a;border:1px solid rgba(52,211,153,0.12);border-radius:4px;padding:24px;">
+          <div style="font-size:10px;letter-spacing:0.12em;color:#34d399;margin-bottom:12px;">英 语</div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:0.04em;line-height:1.4;">语法精讲<br>作文指导<br>满分大纲</div>
+          <div style="margin-top:16px;height:3px;background:linear-gradient(90deg,#34d399,transparent);width:60%;border-radius:2px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI result area with typing marker -->
+    <div style="position:relative;padding:20px;border:1px dashed rgba(240,160,64,0.2);border-radius:4px;">
+      <div style="position:absolute;top:-10px;left:20px;background:#f0a040;color:#000;font-size:9px;padding:4px 12px;letter-spacing:0.1em;font-weight:700;">05 流式打字 + 左侧色条增长</div>
+      <div style="display:flex;gap:0;">
+        <div style="width:3px;background:linear-gradient(180deg,#a78bfa,#a78bfa 60%,transparent);border-radius:2px;margin-right:24px;flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.2);margin-bottom:20px;">AI 回 答</div>
+          <div style="font-size:13px;line-height:1.8;color:rgba(255,255,255,0.65);">
+            <span style="color:#a78bfa;font-weight:600;">【作者介绍】</span><br>
+            鲁迅（1881-1936），原名周树人，中国现代文学奠基人之一...<br><br>
+            <span style="color:#a78bfa;font-weight:600;">【写作背景】</span><br>
+            本文写于1921年，正值五四运动后中国社会剧烈变革的时期...<br><br>
+            <span style="display:inline-block;width:8px;height:14px;background:#a78bfa;animation:blink 1s step-end infinite;vertical-align:middle;margin-left:2px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 page transition -->
+    <div style="margin-top:24px;display:flex;align-items:center;gap:12px;padding:12px 20px;background:rgba(129,140,248,0.08);border-radius:4px;">
+      <div style="font-size:9px;letter-spacing:0.1em;background:#818cf8;color:#000;padding:4px 12px;font-weight:700;">06 页面过渡</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.04em;">路由切换 → 3D 粒子重组 + 页面 150ms 快滑入 + 旧页淡出</div>
+    </div>
+  </div>
+</div>
