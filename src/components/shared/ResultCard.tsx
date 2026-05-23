@@ -1,5 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Copy, Heart, Check } from "lucide-react";
 import { useState } from "react";
 import { cn, copyToClipboard } from "@/lib/utils";
@@ -10,9 +12,18 @@ interface Props {
   item: HistoryItem;
   isFav: boolean;
   onToggleFavorite: () => void;
+  accentColor?: string;
+  streaming?: boolean;
 }
 
-export default function ResultCard({ content, item, isFav, onToggleFavorite }: Props) {
+export default function ResultCard({
+  content,
+  item,
+  isFav,
+  onToggleFavorite,
+  accentColor = "#a78bfa",
+  streaming = false,
+}: Props) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -23,33 +34,54 @@ export default function ResultCard({ content, item, isFav, onToggleFavorite }: P
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-card p-6 relative"
+      className="flex gap-0"
     >
-      <div className="prose prose-invert max-w-none text-sm leading-relaxed whitespace-pre-wrap">
-        {content}
-      </div>
-      <div className="flex gap-2 mt-4 pt-4 border-t border-white/5">
-        <button
-          onClick={handleCopy}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-white/5 transition-all"
+      {/* Left accent bar */}
+      <div
+        className="w-[3px] rounded-full flex-shrink-0 mr-6"
+        style={{ background: `linear-gradient(180deg, ${accentColor}, ${accentColor}40)` }}
+      />
+
+      <div className="flex-1 min-w-0">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <span
+            className="text-[10px] tracking-[0.15em] font-bold uppercase"
+            style={{ color: accentColor }}
+          >
+            AI 回 答
+          </span>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleCopy}
+              className="text-[10px] tracking-[0.08em] text-white/30 hover:text-white/60 transition-colors"
+            >
+              {copied ? "已复制" : "复制"}
+            </button>
+            <button
+              onClick={onToggleFavorite}
+              className={cn(
+                "text-[10px] tracking-[0.08em] transition-colors",
+                isFav ? "text-red-400" : "text-white/30 hover:text-red-400"
+              )}
+            >
+              {isFav ? "已收藏" : "收藏"}
+            </button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div
+          className="markdown-body text-[14px] leading-relaxed text-white/65"
+          style={{ ["--accent-color" as string]: accentColor }}
         >
-          {copied ? <Check className="w-3.5 h-3.5 text-english" /> : <Copy className="w-3.5 h-3.5" />}
-          {copied ? "已复制" : "复制"}
-        </button>
-        <button
-          onClick={onToggleFavorite}
-          className={cn(
-            "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all",
-            isFav
-              ? "text-red-400 bg-red-400/10"
-              : "text-text-secondary hover:text-red-400 hover:bg-white/5",
-          )}
-        >
-          <Heart className={cn("w-3.5 h-3.5", isFav && "fill-current")} />
-          {isFav ? "已收藏" : "收藏"}
-        </button>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {content}
+          </ReactMarkdown>
+          {streaming && <span className="cursor-blink" style={{ ["--accent-color" as string]: accentColor }} />}
+        </div>
       </div>
     </motion.div>
   );
