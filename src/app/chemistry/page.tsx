@@ -6,25 +6,31 @@ import { CHEMISTRY_EXPERIMENTS } from "@/lib/experiments";
 
 const ThreeParticles = dynamic(() => import("@/components/three/ThreeParticles"), { ssr: false });
 
+const ACCENT = "#f0a040";
+
 export default function ChemistryPage() {
   return (
     <div className="relative min-h-[calc(100vh-3.5rem)]">
-      <ThreeParticles color="#f0a040" />
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h2 className="text-3xl font-bold text-chemistry mb-2">化学实验</h2>
-          <p className="text-text-secondary text-sm">交互式化学实验 · 化学家的故事</p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-4">
+      <ThreeParticles color={ACCENT} />
+      <div className="max-w-4xl mx-auto px-6 md:px-12 py-12">
+        <p className="text-[10px] tracking-[0.15em] text-white/20 mb-8">课程 / 化 学</p>
+        <div className="mb-2">
+          <h2 className="text-[48px] md:text-[56px] font-[900] tracking-[0.04em] leading-[1.1] text-white">化 学</h2>
+          <p className="text-[18px] font-[300] italic tracking-[-0.02em] text-white/20 mt-1">Chemistry</p>
+        </div>
+        <p className="text-[13px] text-white/30 tracking-[0.04em] mb-10 max-w-[380px]">
+          交互式实验 · 化学家的故事。点击实验卡片，进入沉浸式学习体验。
+        </p>
+        <div className="grid md:grid-cols-2 gap-3">
           {CHEMISTRY_EXPERIMENTS.map((exp, i) => (
             <motion.div
               key={exp.id}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
             >
-              <ExperimentCard experiment={exp} color="#f0a040" href={`/chemistry/${exp.id}`} />
+              <ExperimentCard experiment={exp} color={ACCENT} href={`/chemistry/${exp.id}`} />
             </motion.div>
           ))}
         </div>
