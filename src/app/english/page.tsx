@@ -1,22 +1,20 @@
 "use client";
 import { useState, useCallback } from "react";
-import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import ModeSelector from "@/components/shared/ModeSelector";
-import InputPanel from "@/components/shared/InputPanel";
-import ResultCard from "@/components/shared/ResultCard";
-import HookList from "@/components/shared/HookList";
 import SkeletonLoader from "@/components/shared/SkeletonLoader";
 import ErrorToast from "@/components/shared/ErrorToast";
-import HistoryDrawer from "@/components/shared/HistoryDrawer";
-import FavoriteDrawer from "@/components/shared/FavoriteDrawer";
+import ResultCard from "@/components/shared/ResultCard";
+import ModeSelector from "@/components/shared/ModeSelector";
+import InputPanel from "@/components/shared/InputPanel";
+import HookList from "@/components/shared/HookList";
+import type { EnglishMode, HistoryItem, EssayHook } from "@/types";
 import { useHistory } from "@/hooks/useHistory";
-import type { EnglishMode, EssayHook } from "@/types";
-import { Clock, Heart } from "lucide-react";
 
 const ThreeParticles = dynamic(() => import("@/components/three/ThreeParticles"), { ssr: false });
 
-const MODE_OPTIONS = [
+const ACCENT = "#34d399";
+
+const modeOptions = [
   { value: "grammar" as const, label: "语法指导" },
   { value: "essay" as const, label: "作文指导" },
 ];
@@ -25,18 +23,21 @@ export default function EnglishPage() {
   const [mode, setMode] = useState<EnglishMode>("grammar");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
-  const [outline, setOutline] = useState<string | null>(null);
   const [hooks, setHooks] = useState<EssayHook[] | null>(null);
+  const [outline, setOutline] = useState<string | null>(null);
+  const [guidance, setGuidance] = useState<string | null>(null);
   const [error, setError] = useState<{ message: string; code?: string } | null>(null);
-  const [historyOpen, setHistoryOpen] = useState(false);
-  const [favoriteOpen, setFavoriteOpen] = useState(false);
-  const [lastItem, setLastItem] = useState<ReturnType<typeof useHistory>["history"][0] | null>(null);
-
-  const { history, favorites, save, toggleFavorite, clearAll, isFavorite: checkFav } = useHistory();
+  const [streaming, setStreaming] = useState(false);
+  const { save, favorites, toggleFavorite } = useHistory();
+  const [currentItem, setCurrentItem] = useState<HistoryItem | null>(null);
 
   const handleSubmit = useCallback(async (input: string) => {
     setLoading(true);
-    setResult(null); setOutline(null); setHooks(null); setError(null);
+    setError(null);
+    setResult(null);
+    setHooks(null);
+    setOutline(null);
+    setGuidance(null);
     try {
       const res = await fetch("/api/english", {
         method: "POST",
@@ -44,77 +45,83 @@ export default function EnglishPage() {
         body: JSON.stringify({ mode, input }),
       });
       const json = await res.json();
-      if (!res.ok) { setError({ message: json.error, code: json.code }); return; }
+      if (!res.ok) { setError({ message: json.error, code: json.code }); setLoading(false); return; }
 
       if (mode === "essay") {
-        setOutline(json.data.outline || "");
-        setHooks(json.data.hooks || []);
-        const item = save("english", input, { outline: json.data.outline, hooks: json.data.hooks }, mode);
-        setLastItem(item);
-      } else {
-        setResult(json.data.raw || "");
-        const item = save("english", input, { raw: json.data.raw }, mode);
-        setLastItem(item);
+        if (json.data.outline) setOutline(json.data.outline);
+        if (json.data.guidance) setGuidance(json.data.guidance);
+        if (json.data.hooks?.length) setHooks(json.data.hooks);
+      } else if (json.data.raw) {
+        setResult(json.data.raw);
       }
+
+      const item = save("english", input, json.data.raw || JSON.stringify(json.data), mode);
+      setCurrentItem(item);
     } catch {
-      setError({ message: "网络错误，请检查连接后重试" });
+      setError({ message: "网络错误" });
     } finally {
       setLoading(false);
+      setStreaming(false);
     }
   }, [mode, save]);
 
   return (
     <div className="relative min-h-[calc(100vh-3.5rem)]">
-      <ThreeParticles color="#3dd68c" />
-      <div className="max-w-3xl mx-auto px-4 py-8">
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h2 className="text-3xl font-bold text-english mb-2">英语学习</h2>
-          <p className="text-text-secondary text-sm">AI 语法精讲 · 满分作文指导</p>
-        </motion.div>
-
-        <div className="flex items-center gap-4 mb-6">
-          <div className="flex-1"><ModeSelector options={MODE_OPTIONS} value={mode} onChange={setMode} /></div>
-          <button onClick={() => setHistoryOpen(true)} className="glass-card p-2.5 rounded-xl hover:border-white/15 transition-all">
-            <Clock className="w-5 h-5 text-text-secondary" />
-          </button>
-          <button onClick={() => setFavoriteOpen(true)} className="glass-card p-2.5 rounded-xl hover:border-white/15 transition-all">
-            <Heart className="w-5 h-5 text-text-secondary" />
-          </button>
+      <ThreeParticles color={ACCENT} />
+      <div className="max-w-3xl mx-auto px-6 md:px-12 py-12">
+        <p className="text-[10px] tracking-[0.15em] text-white/20 mb-8">课程 / 英 语</p>
+        <div className="mb-2">
+          <h2 className="text-[48px] md:text-[56px] font-[900] tracking-[0.04em] leading-[1.1] text-white">英 语</h2>
+          <p className="text-[18px] font-[300] italic tracking-[-0.02em] text-white/20 mt-1">English</p>
         </div>
-
-        <InputPanel
-          placeholder={mode === "grammar" ? "输入中文描述语法点，如：现在完成时... 或粘贴英文句子" : "输入文体和主题，如：书信 给朋友的感谢信..."}
-          onSubmit={handleSubmit}
-          loading={loading}
-          maxLength={1000}
-        />
-
-        {loading && <div className="mt-6"><SkeletonLoader /></div>}
-
-        {result && lastItem && (
-          <div className="mt-6">
-            <ResultCard content={result} item={lastItem} isFav={checkFav(lastItem.id)} onToggleFavorite={() => toggleFavorite(lastItem)} />
-          </div>
-        )}
-
+        <p className="text-[13px] text-white/30 tracking-[0.04em] mb-10 max-w-[380px]">
+          语法精讲 · 作文指导 · 满分大纲。选择学习模式，获取专业英语辅导。
+        </p>
+        <ModeSelector options={modeOptions} value={mode} onChange={setMode} />
+        <div className="mt-8">
+          <InputPanel
+            placeholder={mode === "essay" ? "输入文体和主题..." : "输入英文句子或中文语法描述..."}
+            onSubmit={handleSubmit}
+            loading={loading}
+            accentColor={ACCENT}
+          />
+        </div>
+        {loading && <div className="mt-8"><SkeletonLoader /></div>}
         {outline && (
-          <div className="mt-6 glass-card p-6">
-            <h3 className="text-lg font-bold text-english mb-4">满分作文大纲与指导</h3>
-            <div className="text-sm leading-relaxed whitespace-pre-wrap">{outline}</div>
+          <div className="mt-10">
+            <div className="content-card p-6 accent-left" style={{ ["--accent-color" as string]: ACCENT }}>
+              <h3 className="text-[12px] tracking-[0.1em] font-bold mb-3" style={{ color: ACCENT }}>作文大纲</h3>
+              <div className="markdown-body text-[14px] text-white/65" style={{ ["--accent-color" as string]: ACCENT }}>
+                {outline}
+              </div>
+            </div>
           </div>
         )}
-
-        {hooks && hooks.length > 0 && (
-          <div className="mt-6"><HookList hooks={hooks} /></div>
+        {guidance && (
+          <div className="mt-4">
+            <div className="content-card p-6 accent-left" style={{ ["--accent-color" as string]: ACCENT }}>
+              <h3 className="text-[12px] tracking-[0.1em] font-bold mb-3" style={{ color: ACCENT }}>写作指导</h3>
+              <div className="markdown-body text-[14px] text-white/65" style={{ ["--accent-color" as string]: ACCENT }}>
+                {guidance}
+              </div>
+            </div>
+          </div>
         )}
-
-        {error && <ErrorToast message={error.message} code={error.code} onRetry={() => setError(null)} onDismiss={() => setError(null)} />}
+        {result && currentItem && (
+          <div className="mt-10">
+            <ResultCard
+              content={result}
+              item={currentItem}
+              isFav={favorites.some((f) => f.id === currentItem.id)}
+              onToggleFavorite={() => toggleFavorite(currentItem)}
+              accentColor={ACCENT}
+              streaming={streaming}
+            />
+          </div>
+        )}
+        {hooks && <div className="mt-10"><HookList hooks={hooks} /></div>}
+        {error && <ErrorToast message={error.message} code={error.code} onRetry={() => {}} onDismiss={() => setError(null)} />}
       </div>
-
-      <HistoryDrawer open={historyOpen} onClose={() => setHistoryOpen(false)} history={history}
-        onToggleFavorite={toggleFavorite} onClearAll={clearAll} isFavorite={checkFav} />
-      <FavoriteDrawer open={favoriteOpen} onClose={() => setFavoriteOpen(false)} favorites={favorites}
-        onRemove={(id) => toggleFavorite({ id } as never)} />
     </div>
   );
 }
