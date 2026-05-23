@@ -1,0 +1,21 @@
+import type { Metadata } from "next";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "GLUT Aing Education — AI 赋能教育",
+  description: "AI 赋能中小学教育学习助手",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="zh-CN">
+      <body className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-1 pt-14">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  );
+}
