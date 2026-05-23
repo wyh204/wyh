@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn, copyToClipboard } from "@/lib/utils";
 import type { HistoryItem } from "@/types";
 
@@ -25,6 +25,10 @@ export default function ResultCard({
 }: Props) {
   const [copied, setCopied] = useState(false);
   const mountedRef = useRef(true);
+
+  useEffect(() => {
+    return () => { mountedRef.current = false; };
+  }, []);
 
   async function handleCopy() {
     await copyToClipboard(content);
