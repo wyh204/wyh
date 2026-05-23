@@ -1,10 +1,9 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 py-6 mt-auto">
-      <div className="max-w-6xl mx-auto px-4 text-center text-sm text-text-secondary">
-        <p>GLUT Aing Education — 桂林理工大学 · 三下乡 AI 赋能教育项目</p>
-        <p className="mt-1 opacity-60">Powered by DeepSeek AI</p>
-      </div>
+    <footer className="border-t border-white/[0.04] py-8 text-center">
+      <p className="text-[10px] tracking-[0.15em] text-white/10">
+        POWERED BY DEEPSEEK AI · 桂林理工大学 三下乡 · GLUT AING EDUCATION
+      </p>
     </footer>
   );
 }
