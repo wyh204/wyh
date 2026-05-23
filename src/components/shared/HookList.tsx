@@ -22,14 +22,17 @@ export default function HookList({ hooks }: Props) {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold">爆款开头结尾 Hook</h3>
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="text-[12px] tracking-[0.12em] font-bold text-white/40 uppercase">
+          爆款开头结尾 Hook
+        </h3>
         <button
+          type="button"
           onClick={handleCopyAll}
-          className="text-xs px-3 py-1.5 rounded-lg glass-card hover:border-white/15 transition-all flex items-center gap-1"
+          className="text-[10px] tracking-[0.08em] text-white/30 hover:text-white/60 transition-colors flex items-center gap-1.5"
         >
           <Copy className="w-3 h-3" />
-          {copiedAll ? "已复制全部" : "一键复制全部"}
+          {copiedAll ? "已复制全部" : "一键复制"}
         </button>
       </div>
       <motion.div

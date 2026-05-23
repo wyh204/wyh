@@ -1,12 +1,21 @@
+"use client";
+import { motion } from "framer-motion";
+
 export default function SkeletonLoader() {
   return (
-    <div className="glass-card p-6 animate-pulse space-y-4">
-      <div className="h-4 bg-white/10 rounded w-3/4" />
-      <div className="h-4 bg-white/10 rounded w-full" />
-      <div className="h-4 bg-white/10 rounded w-5/6" />
-      <div className="h-4 bg-white/10 rounded w-2/3" />
-      <div className="h-4 bg-white/10 rounded w-full" />
-      <div className="h-3 bg-white/10 rounded w-1/4 mt-6" />
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="content-card p-6 animate-pulse"
+    >
+      <div className="w-24 h-3 bg-white/[0.04] rounded-sm mb-6" />
+      <div className="space-y-3">
+        <div className="w-full h-3 bg-white/[0.03] rounded-sm" />
+        <div className="w-4/5 h-3 bg-white/[0.03] rounded-sm" />
+        <div className="w-3/5 h-3 bg-white/[0.03] rounded-sm" />
+        <div className="w-full h-3 bg-white/[0.03] rounded-sm mt-4" />
+        <div className="w-2/3 h-3 bg-white/[0.03] rounded-sm" />
+      </div>
+    </motion.div>
   );
 }

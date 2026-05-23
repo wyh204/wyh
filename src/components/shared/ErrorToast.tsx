@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, RefreshCw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { AlertTriangle, RefreshCw, X } from "lucide-react";
+import { useEffect } from "react";
 
 interface Props {
   message: string;
@@ -11,45 +11,39 @@ interface Props {
 }
 
 export default function ErrorToast({ message, code, onRetry, onDismiss }: Props) {
-  const [visible, setVisible] = useState(true);
-
   useEffect(() => {
-    const t = setTimeout(() => {
-      setVisible(false);
-      setTimeout(onDismiss, 300);
-    }, 8000);
-    return () => clearTimeout(t);
+    const timer = setTimeout(onDismiss, 8000);
+    return () => clearTimeout(timer);
   }, [onDismiss]);
+
+  const brandMessage = code === "NO_API_KEY"
+    ? "API Key 未配置，请在 .env.local 中设置 DEEPSEEK_API_KEY"
+    : code === "TIMEOUT"
+    ? "AI 响应超时，请稍后重试"
+    : message;
 
   return (
     <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 max-w-sm glass-card border-red-500/30 p-4"
-        >
-          <div className="flex items-start gap-3">
-            <div className="flex-1">
-              <p className="text-sm text-red-400">{message}</p>
-              {code && <p className="text-xs text-text-secondary mt-1">错误代码: {code}</p>}
-            </div>
-            <button onClick={onDismiss} className="text-text-secondary hover:text-text-primary">
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        className="mt-6 content-card p-5 flex items-start gap-4"
+        style={{ borderColor: "rgba(248,113,113,0.2)" }}
+      >
+        <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+        <p className="text-[13px] text-red-300/80 leading-relaxed flex-1">{brandMessage}</p>
+        <div className="flex items-center gap-3 flex-shrink-0">
           {onRetry && (
-            <button
-              onClick={onRetry}
-              className="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-white/5 hover:bg-white/10 transition-all"
-            >
-              <RefreshCw className="w-3 h-3" />
-              重试
+            <button type="button" onClick={onRetry} className="text-[10px] tracking-[0.08em] text-red-400 hover:text-red-300 transition-colors flex items-center gap-1">
+              <RefreshCw className="w-3 h-3" /> 重试
             </button>
           )}
-        </motion.div>
-      )}
+          <button type="button" onClick={onDismiss} className="text-white/20 hover:text-white/40 transition-colors">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </motion.div>
     </AnimatePresence>
   );
 }
