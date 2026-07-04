@@ -6,18 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cf:build": "npx opennextjs-cloudflare build",
+    "cf:deploy": "npx wrangler deploy",
+    "cf:preview": "npx wrangler dev"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.1",
     "@react-three/drei": "^9.109.0",
     "@react-three/fiber": "^8.17.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "framer-motion": "^11.3.0",
     "lucide-react": "^0.400.0",
-    "next": "^14.2.0",
-    "react": "^18.3.0",
-    "react-dom": "^18.3.0",
+    "next": "^16.2.10",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^2.4.0",
@@ -31,6 +35,7 @@
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "wrangler": "^4.107.0"
   }
 }

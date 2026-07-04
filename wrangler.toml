@@ -1,0 +1,17 @@
+# Cloudflare Worker configuration for GLUT AING Education
+name = "wyh12"
+main = ".open-next/worker.js"
+compatibility_date = "2026-07-04"
+compatibility_flags = ["nodejs_compat"]
+
+# Static assets
+[assets]
+directory = ".open-next/assets"
+
+# Environment variables (set real values in Cloudflare Dashboard)
+[vars]
+NODE_ENV = "production"
+
+# Observability
+[observability]
+enabled = true
