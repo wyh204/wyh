@@ -1,10 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 const REVIEWS = [
-  { name: "小明", grade: "三年级", avatar: "👦", stars: 5, text: "这个学习平台太好玩了！我最喜欢做物理实验，光的折射让我明白了彩虹怎么形成的🌈", color: "#FF7B5C" },
-  { name: "小红", grade: "四年级", avatar: "👧", stars: 5, text: "数学拍照搜题超级方便！遇到不会的应用题，拍个照片就能看到详细的解题步骤📷", color: "#5BA4E6" },
-  { name: "小刚", grade: "五年级", avatar: "🧒", stars: 4, text: "英语的单词学习功能很棒，每个单词都有发音和例句，我的英语成绩进步了好多！🌟", color: "#6DBE6D" },
-  { name: "小花", grade: "三年级", avatar: "👧", stars: 5, text: "我最爱语文的作文辅导，AI老师给的例子特别有趣，写作文再也不头疼啦✍️", color: "#B39DDB" },
+  { name: "小明", grade: "初一", avatar: "👦", stars: 5, text: "这个学习平台太棒了！我最喜欢做物理实验，光的折射让我真正理解了彩虹的原理🌈", color: "#FF7B5C" },
+  { name: "小红", grade: "初二", avatar: "👧", stars: 5, text: "数学拍照搜题超级方便！遇到不会的几何题，拍个照片就能看到详细的解题步骤📷", color: "#5BA4E6" },
+  { name: "小刚", grade: "初三", avatar: "🧒", stars: 4, text: "英语语法讲解很透彻，AI 老师分析得很细致，我的阅读完形进步了好多！🌟", color: "#6DBE6D" },
+  { name: "小花", grade: "初一", avatar: "👧", stars: 5, text: "我最爱语文的古文精读，AI老师逐句翻译特别清晰，文言文再也不头疼啦✍️", color: "#B39DDB" },
 ];
 export default function UserReviews() {
   return (
