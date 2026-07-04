@@ -1,19 +1,19 @@
 import type { YuwenMode, EnglishMode } from "@/types";
 
-const BASE_TONE = "你是一个面向中国中小学生的AI学习助手，使用亲切温和但专业的语气。回答使用中文。";
+const BASE_TONE = "你是一个面向中国初中生的AI学习助手，使用亲切温和但专业的语气。回答使用中文。回答内容应具备一定的深度和思辨性，适合初中生的认知水平。";
 
 export function yuwenPrompt(mode: YuwenMode, input: string): { system: string; user: string } {
-  const base = `${BASE_TONE}你是一位资深的语文老师，擅长引导学生理解文学作品。`;
+  const base = `${BASE_TONE}你是一位资深的初中语文老师，擅长引导学生深入理解文学作品，注重培养学生的文学鉴赏能力和思辨能力。`;
 
   if (mode === "modern") {
     return {
-      system: base + "请按以下结构回复：\n1.【作者介绍】（含趣事轶闻）\n2.【写作背景】\n3.【文章鉴赏】",
-      user: `请分析语文课本中的文章：${input}`,
+      system: base + "请按以下结构回复，内容需达到初中语文深度：\n1.【作者介绍】（含文学地位与趣事轶闻）\n2.【写作背景】（结合时代背景与社会意义）\n3.【文章鉴赏】（从主旨思想、艺术手法、语言特色等角度深入分析）",
+      user: `请分析初中语文课本中的文章：${input}`,
     };
   }
   if (mode === "classical") {
     return {
-      system: base + "请按以下结构回复：\n1.【作者介绍】（含趣事轶闻）\n2.【写作背景】\n3.【一字一译】（逐字逐句翻译）\n4.【重点古文字词与句型】\n5.【文章鉴赏】",
+      system: base + "请按以下结构回复，内容需达到初中古文学习深度：\n1.【作者介绍】（含文学地位与趣事轶闻）\n2.【写作背景】（结合历史背景与创作缘由）\n3.【一字一译】（逐字逐句翻译，重点字词标注文言用法）\n4.【重点文言字词与特殊句型】（归纳虚词用法、词类活用、特殊句式等中考考点）\n5.【文章鉴赏】（从思想内涵、艺术手法、历史影响等角度深入分析）",
       user: `请分析这篇古文：${input}`,
     };
   }
@@ -34,7 +34,7 @@ export function yuwenPrompt(mode: YuwenMode, input: string): { system: string; u
 
 export function mathPrompt(question: string): { system: string; user: string } {
   return {
-    system: `${BASE_TONE}你是一位数学老师，同时也精通数学史。请按以下结构回复：
+    system: `${BASE_TONE}你是一位初中数学老师，同时也精通数学史。请按以下结构回复：
 1.【题目分析】
 2.【涉及的数学家及定理】
 3.【解答过程】
@@ -47,7 +47,7 @@ export function mathPrompt(question: string): { system: string; user: string } {
 export function englishPrompt(mode: EnglishMode, input: string): { system: string; user: string } {
   if (mode === "grammar") {
     return {
-      system: `${BASE_TONE}你是一位英语老师。用户输入可能是：
+      system: `${BASE_TONE}你是一位初中英语老师。用户输入可能是：
 - 中文描述的语法点 → 解释该语法用法并给出典型例句
 - 英文句子 → 给出中文翻译、句子中含有的语法点、典型例句`,
       user: input,
@@ -55,7 +55,7 @@ export function englishPrompt(mode: EnglishMode, input: string): { system: strin
   }
   // essay help
   return {
-    system: `${BASE_TONE}你是一位英语作文辅导专家。用户会提供文体和主题，你需要：
+    system: `${BASE_TONE}你是一位初中英语作文辅导专家。用户会提供文体和主题，你需要：
 1. 给出满分级别的英语作文大纲
 2. 给出写作指导
 3. 生成10个不同风格的英语开头结尾hook（英文）
@@ -68,7 +68,7 @@ export function englishPrompt(mode: EnglishMode, input: string): { system: strin
 
 export function experimentPrompt(experimentName: string, scientist: string): { system: string; user: string } {
   return {
-    system: `${BASE_TONE}你是一位实验指导老师。请按以下结构回复：
+    system: `${BASE_TONE}你是一位初中理化实验指导老师。请按以下结构回复：
 1.【实验目的】
 2.【实验器材】
 3.【实验步骤】（分步说明）

@@ -1,34 +1,22 @@
 "use client";
 import dynamic from "next/dynamic";
 
-const RefractionScene = dynamic(() => import("./RefractionScene"), { ssr: false });
-const CircuitScene = dynamic(() => import("./CircuitScene"), { ssr: false });
-const BuoyancyScene = dynamic(() => import("./BuoyancyScene"), { ssr: false });
-const LensScene = dynamic(() => import("./LensScene"), { ssr: false });
-const ChemistryLabScene = dynamic(() => import("./ChemistryLabScene"), { ssr: false });
+const ExperimentVideoPlayer = dynamic(() => import("@/components/shared/ExperimentVideoPlayer"), { ssr: false });
 
-interface Props {
-  experimentId: string;
-}
+interface Props { experimentId: string; accentColor?: string; }
 
-export default function ExperimentCanvas({ experimentId }: Props) {
-  const cls = "w-full h-72 md:h-96 rounded-[4px] overflow-hidden content-card";
+export default function ExperimentCanvas({ experimentId, accentColor = "#B39DDB" }: Props) {
+  const isPhysics = ["refraction", "boiling-water", "buoyancy", "convex-lens"].includes(experimentId);
+  const isChem = ["solution-prep", "oxygen", "ph-test", "titration"].includes(experimentId);
 
-  switch (experimentId) {
-    case "refraction": return <div className={cls}><RefractionScene /></div>;
-    case "circuit": return <div className={cls}><CircuitScene /></div>;
-    case "buoyancy": return <div className={cls}><BuoyancyScene /></div>;
-    case "convex-lens": return <div className={cls}><LensScene /></div>;
-    case "oxygen":
-    case "co2":
-    case "metal-acid":
-    case "titration":
-      return <div className={cls}><ChemistryLabScene /></div>;
-    default:
-      return (
-        <div className={`${cls} flex items-center justify-center`}>
-          <p className="text-white/20 text-[12px] tracking-[0.08em]">3D 实验场景</p>
-        </div>
-      );
+  if (isPhysics || isChem) {
+    const color = isPhysics ? "#B39DDB" : "#FFCC4D";
+    return <ExperimentVideoPlayer experimentId={experimentId} accentColor={color} />;
   }
+
+  return (
+    <div className="w-full aspect-video rounded-2xl border-2 border-[#E8E0F0] bg-white flex items-center justify-center">
+      <p className="text-[#B0A0C0] text-[14px] font-medium">🎬 视频加载中...</p>
+    </div>
+  );
 }

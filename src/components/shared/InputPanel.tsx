@@ -18,7 +18,7 @@ export default function InputPanel({
   loading = false,
   disabled = false,
   maxLength = 500,
-  accentColor = "#a78bfa",
+  accentColor = "#FF7B5C",
 }: Props) {
   const [input, setInput] = useState("");
 
@@ -46,10 +46,10 @@ export default function InputPanel({
           maxLength={maxLength}
           rows={1}
           className={cn(
-            "w-full h-full bg-[#0d0d1a] border border-white/[0.06] rounded-[4px] px-5 py-4",
-            "text-white/65 placeholder-white/15",
-            "focus:outline-none focus:border-white/15",
-            "resize-none transition-all duration-200 text-[13px] tracking-[0.02em]",
+            "w-full h-full bg-white border-2 border-[#E8E0F0] rounded-2xl px-5 py-4",
+            "text-[#3D3D4E] placeholder-[#B0A0C0]",
+            "focus:outline-none focus:border-[#FFB09C] focus:shadow-[0_0_0_4px_rgba(255,123,92,0.1)]",
+            "resize-none transition-all duration-200 text-[14px] tracking-[0.02em] font-medium",
           )}
         />
       </div>
@@ -58,10 +58,14 @@ export default function InputPanel({
         onClick={handleSubmit}
         disabled={loading || disabled || !input.trim()}
         className={cn(
-          "px-8 rounded-[4px] font-bold text-[12px] tracking-[0.1em] flex items-center gap-2 transition-all duration-200",
-          "disabled:opacity-30 disabled:cursor-not-allowed text-[#0a0a0f]",
+          "px-8 rounded-2xl font-bold text-[13px] tracking-[0.08em] flex items-center gap-2 transition-all duration-200",
+          "disabled:opacity-40 disabled:cursor-not-allowed text-white",
+          "hover:scale-105 active:scale-95",
         )}
-        style={{ background: loading ? `${accentColor}80` : accentColor }}
+        style={{
+          background: loading ? `${accentColor}99` : accentColor,
+          boxShadow: `0 4px 16px ${accentColor}40`,
+        }}
       >
         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
         发 送

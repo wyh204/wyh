@@ -14,7 +14,12 @@ export default function HookList({ hooks }: Props) {
   const [copiedAll, setCopiedAll] = useState(false);
 
   async function handleCopyAll() {
-    const text = hooks.map((h, i) => `【${i + 1}】${h.styleTag}\n${h.hookText}`).join("\n\n");
+    const text = hooks.map((h, i) => {
+      const parts = h.hookText.split(/结尾[：:]/);
+      const k = (parts[0] || "").replace(/^开头[：:]\s*/, "").trim();
+      const j = (parts[1] || "").trim();
+      return `【${i + 1}】${h.styleTag}风格（⭐${h.clickBaitScore}/10）\n开头：${k}${j ? `\n结尾：${j}` : ""}`;
+    }).join("\n\n");
     await copyToClipboard(text);
     setCopiedAll(true);
     setTimeout(() => setCopiedAll(false), 2000);
@@ -23,16 +28,16 @@ export default function HookList({ hooks }: Props) {
   return (
     <div>
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-[12px] tracking-[0.12em] font-bold text-white/40 uppercase">
-          爆款开头结尾 Hook
+        <h3 className="text-[13px] tracking-[0.1em] font-bold text-[#6B6B7B]">
+          💡 爆款开头结尾 Hook
         </h3>
         <button
           type="button"
           onClick={handleCopyAll}
-          className="text-[10px] tracking-[0.08em] text-white/30 hover:text-white/60 transition-colors flex items-center gap-1.5"
+          className="text-[11px] tracking-[0.08em] text-[#9999AA] hover:text-[#6B6B7B] transition-colors flex items-center gap-1.5 font-medium"
         >
           <Copy className="w-3 h-3" />
-          {copiedAll ? "已复制全部" : "一键复制"}
+          {copiedAll ? "✅ 已复制全部" : "📋 一键复制"}
         </button>
       </div>
       <motion.div

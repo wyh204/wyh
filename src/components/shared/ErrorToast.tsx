@@ -28,18 +28,17 @@ export default function ErrorToast({ message, code, onRetry, onDismiss }: Props)
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
-        className="mt-6 content-card p-5 flex items-start gap-4"
-        style={{ borderColor: "rgba(248,113,113,0.2)" }}
+        className="mt-6 bg-white border-2 border-red-200 rounded-2xl p-5 flex items-start gap-4"
       >
-        <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-        <p className="text-[13px] text-red-300/80 leading-relaxed flex-1">{brandMessage}</p>
+        <AlertTriangle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+        <p className="text-[14px] text-red-600 leading-relaxed flex-1 font-medium">{brandMessage}</p>
         <div className="flex items-center gap-3 flex-shrink-0">
           {onRetry && (
-            <button type="button" onClick={onRetry} className="text-[10px] tracking-[0.08em] text-red-400 hover:text-red-300 transition-colors flex items-center gap-1">
+            <button type="button" onClick={onRetry} className="text-[11px] tracking-[0.08em] text-red-500 hover:text-red-600 transition-colors flex items-center gap-1 font-medium">
               <RefreshCw className="w-3 h-3" /> 重试
             </button>
           )}
-          <button type="button" onClick={onDismiss} className="text-white/20 hover:text-white/40 transition-colors">
+          <button type="button" onClick={onDismiss} className="text-[#B0A0C0] hover:text-[#6B6B7B] transition-colors">
             <X className="w-3.5 h-3.5" />
           </button>
         </div>

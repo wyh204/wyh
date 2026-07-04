@@ -5,8 +5,8 @@ import PageTransition from "@/components/layout/PageTransition";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GLUT Aing Education — AI 赋能教育",
-  description: "AI 赋能中小学教育学习助手",
+  title: "🌟 GLUT Aing Education — AI 快乐学习乐园",
+  description: "AI 赋能初中教育学习助手 — 让学习变得有趣又高效！",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
