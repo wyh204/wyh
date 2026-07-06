@@ -1,0 +1,20 @@
+# Cloudflare Worker: wyh123
+# 部署命令: npx wrangler deploy -c .claude/cloudflare/wyh123.toml
+
+name = "wyh123"
+main = "../../.open-next/worker.js"
+compatibility_date = "2026-07-04"
+compatibility_flags = ["nodejs_compat"]
+
+workers_dev = true
+
+[assets]
+directory = "../../.open-next/assets"
+
+[vars]
+NODE_ENV = "production"
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+DEEPSEEK_MODEL = "deepseek-chat"
+
+[observability]
+enabled = true

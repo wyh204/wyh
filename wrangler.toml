@@ -4,13 +4,24 @@ main = ".open-next/worker.js"
 compatibility_date = "2026-07-04"
 compatibility_flags = ["nodejs_compat"]
 
-# Static assets
+# Enable workers.dev subdomain (required for wyh12.wyh666.workers.dev)
+workers_dev = true
+
+# Route configuration (uncomment and set your custom domain)
+# route = "example.com/*"
+# routes = [
+#   { pattern = "example.com/*", custom_domain = true }
+# ]
+
+# Static assets (built by opennextjs-cloudflare)
 [assets]
 directory = ".open-next/assets"
 
-# Environment variables (set real values in Cloudflare Dashboard)
+# Non-secret environment variables
 [vars]
 NODE_ENV = "production"
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+DEEPSEEK_MODEL = "deepseek-chat"
 
 # Observability
 [observability]

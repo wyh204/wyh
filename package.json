@@ -9,6 +9,8 @@
     "lint": "next lint",
     "cf:build": "npx opennextjs-cloudflare build",
     "cf:deploy": "npx wrangler deploy",
+    "cf:deploy:wyh123": "npx wrangler deploy -c .claude/cloudflare/wyh123.toml",
+    "cf:deploy:huai": "npx wrangler deploy -c .claude/cloudflare/huai.toml",
     "cf:preview": "npx wrangler dev"
   },
   "dependencies": {

@@ -1,13 +1,15 @@
 "use client";
 import { useState, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, RotateCcw, Sparkles, ExternalLink } from "lucide-react";
+import { ArrowLeft, RotateCcw, Sparkles } from "lucide-react";
 import SkeletonLoader from "@/components/shared/SkeletonLoader";
 import ErrorToast from "@/components/shared/ErrorToast";
 import ExperimentGuide from "@/components/chemistry/ExperimentGuide";
 import ExperimentSummary from "@/components/chemistry/ExperimentSummary";
 import ExperimentQuiz from "@/components/chemistry/ExperimentQuiz";
+const ExperimentVideoPlayer = dynamic(() => import("@/components/shared/ExperimentVideoPlayer"), { ssr: false });
 import StructuredGuidance from "@/components/shared/StructuredGuidance";
 import FollowUpQuestions from "@/components/shared/FollowUpQuestions";
 import { CHEMISTRY_EXPERIMENTS } from "@/lib/experiments";
@@ -81,41 +83,16 @@ export default function ChemistryExperimentPage() {
 
         <ExperimentGuide experimentId={experimentId} accentColor={ACCENT} />
 
-        {/* 外部实验链接 — 美观的跳转入口 */}
+        {/* 实验演示视频 — 内嵌播放，不跳转B站 */}
         {experiment.url && (
-          <motion.a
-            href={experiment.url}
-            target="_blank"
-            rel="noopener noreferrer"
+          <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-6 block bg-white border-2 border-[#E8E0F0] rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-[#D0C0F0] transition-all group"
+            className="mt-6"
           >
-            <div className="flex items-center gap-4 px-5 py-4">
-              <div
-                className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110"
-                style={{ background: `${ACCENT}15` }}
-              >
-                🧪
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[14px] font-bold text-[#3D3D4E] tracking-[0.03em]" style={{ fontFamily: "var(--font-cartoon), 'YouYuan', sans-serif" }}>
-                  在虚拟实验室中操作
-                </p>
-                <p className="text-[12px] text-[#8B8B9B] mt-0.5 truncate flex items-center gap-1">
-                  <ExternalLink className="w-3 h-3 flex-shrink-0" style={{ color: ACCENT }} />
-                  <span>{experiment.url.replace(/^https?:\/\//, "")}</span>
-                </p>
-              </div>
-              <div
-                className="shrink-0 px-4 py-2 rounded-xl text-[12px] font-bold text-white transition-all group-hover:scale-105"
-                style={{ background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT}99)`, boxShadow: `0 2px 8px ${ACCENT}30` }}
-              >
-                开始实验 →
-              </div>
-            </div>
-          </motion.a>
+            <ExperimentVideoPlayer experimentId={experimentId} accentColor={ACCENT} />
+          </motion.div>
         )}
 
 

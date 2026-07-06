@@ -41,27 +41,27 @@ export const PHYSICS_EXPERIMENTS: Experiment[] = [
 
 export const CHEMISTRY_EXPERIMENTS: Experiment[] = [
   {
-    id: "solution-prep", name: "配制一定溶质质量分数的溶液", scientist: "莫尔",
-    description: "使用天平称量固体药品，用量筒量取水，配制指定浓度的溶液",
-    icon: "beaker", difficulty: "入门级",
-    url: "https://chemcollective.org/vlab/vlab.php",
-  },
-  {
     id: "oxygen", name: "制取氧气", scientist: "普里斯特利",
     description: "使用过氧化氢溶液和二氧化锰催化剂，在实验室中制取并收集氧气",
     icon: "wind", difficulty: "入门级",
-    url: "https://chemcollective.org/vlab/vlab.php",
+    url: "https://www.bilibili.com/video/BV1W64y1o7oC/?spm_id_from=333.337.search-card.all.click&vd_source=77f902c14ba236dc659fd3260083e32d",
+  },
+  {
+    id: "solution-prep", name: "配制一定溶质质量分数的溶液", scientist: "莫尔",
+    description: "使用天平称量固体药品，用量筒量取水，配制指定浓度的溶液",
+    icon: "beaker", difficulty: "入门级",
+    url: "https://www.bilibili.com/video/BV1Jf4y1q7y1/?spm_id_from=333.337.search-card.all.click&vd_source=77f902c14ba236dc659fd3260083e32d",
   },
   {
     id: "ph-test", name: "用pH试纸测溶液酸碱性", scientist: "阿伦尼乌斯",
     description: "将不同溶液滴在pH试纸上，观察颜色变化并判断酸碱性",
     icon: "droplet", difficulty: "入门级",
-    url: "https://chemcollective.org/vlab/vlab.php",
+    url: "https://www.bilibili.com/video/BV1TV411J78d/?spm_id_from=333.337.search-card.all.click&vd_source=77f902c14ba236dc659fd3260083e32d",
   },
   {
     id: "titration", name: "酸碱中和滴定", scientist: "阿伦尼乌斯",
     description: "逐滴加入酸液，观察指示剂颜色渐变和pH变化，找到滴定终点",
     icon: "test-tube", difficulty: "进阶级",
-    url: "https://chemcollective.org/activities/type_page/1",
+    url: "https://www.bilibili.com/video/BV1WiycBXESb/?spm_id_from=333.337.search-card.all.click&vd_source=77f902c14ba236dc659fd3260083e32d",
   },
 ];
